@@ -4,7 +4,7 @@ const Hero = () => {
     <div className="bg-white w-full">
       <div className="relative isolate flex justify-center">
         <div
-          className="absolute -z-10 h-full w-full"
+          className="absolute -z-10 h-full w-full blur-sm"
           aria-hidden="true"
         >
           <img
@@ -24,7 +24,7 @@ const Hero = () => {
             </div>
           </div>
           <div className="text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
+            <h1 className="text-4xl font-bold tracking-tight text-white drop-shadow-2xl sm:text-6xl">
               Plan your next vacation trip with&nbsp;
               <span className="block w-full text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-blue-500 lg:inline">
                 Getaway-Guru
