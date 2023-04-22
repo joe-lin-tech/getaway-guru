@@ -2,13 +2,17 @@ const axios = require('axios');
 
 export default function handler(req, res) {
     const apiKey = process.env.YELP_API;
+    const { latitude, longitude, term } = req.body;
+
     const url = 'https://api.yelp.com/v3/businesses/search';
     const headers = {
     'Authorization': `Bearer ${apiKey}`
     };
+    console.log(latitude);
     const params = {
-    location: 'Los Angeles',
-    term: 'food'
+    latitude: `${latitude}`,
+    longitude: `${longitude}`,
+    term: `${term}`
     };
 
     axios.get(url, { headers, params })
@@ -19,7 +23,7 @@ export default function handler(req, res) {
         });
     })
     .catch(error => {
-        console.error(error);
+        // console.error(error);
     });
 }
 
