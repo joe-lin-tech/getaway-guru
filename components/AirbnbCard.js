@@ -26,12 +26,15 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function AirbnbCard() {
+export default function AirbnbCard({roomInfo}) {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+  console.log("roomInfo in AirbnbCard:" + roomInfo);
+  // console.log("roomName:" + roomInfo.name);
+  console.log("roomTitle:" + roomInfo?.message?.results[0]?.name ?? "");
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -46,18 +49,18 @@ export default function AirbnbCard() {
             <MoreVertIcon />
           </IconButton>
         }
-        title="Las Vegas Airbnb"
-        subheader="September 14, 2016"
+        title={roomInfo?.message?.results[0]?.name}
+        city={roomInfo?.message?.results[0]?.city}
       />
       <CardMedia
         component="img"
         height="194"
-        image="/static/images/cards/room.jpg"
+        image={roomInfo?.message?.results[0]?.images[0]}
         alt="Room Image"
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          Description for Room. 1 King bed. 1 bath
+          Number of Bathrooms: {roomInfo?.message?.results[0]?.bathrooms}. Number of Bedrooms: {roomInfo?.message?.results[0]?.bedrooms}. Number of beds: {roomInfo?.message?.results[0]?.beds}. 1 bath
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -78,12 +81,18 @@ export default function AirbnbCard() {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Method:</Typography>
+          <Typography paragraph>Pricing: {roomInfo?.message?.results[0]?.price.rate} {roomInfo?.message?.results[0]?.price.currency}</Typography>
           <Typography paragraph>
-            Description
+            Address: {roomInfo?.message?.results[0]?.address}
+          </Typography>
+          <Typography paragraph>
+            Amenities: {roomInfo?.message?.results[0]?.previewAmenities[0]}
+          </Typography>
+          <Typography paragraph>
+            Rating: {roomInfo?.message?.results[0]?.rating}
           </Typography>
           <Typography>
-            Near MGM Las Vegas
+            Airbnb URL: {roomInfo?.message?.results[0]?.url}
           </Typography>
         </CardContent>
       </Collapse>

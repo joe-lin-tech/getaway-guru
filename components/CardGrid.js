@@ -1,14 +1,18 @@
 import React from 'react'
 import AirbnbCard from '@/components/AirbnbCard'
 
-function Cardgrid() {
+function CardGrid({roomInfo}) {
+  console.log("roomInfo in CardGrid:" + roomInfo)
   return (
-    <div>
-      <AirbnbCard />
-      <AirbnbCard />
-      <AirbnbCard />
+    <div className="grid grid-cols-5 gap-5">
+      <AirbnbCard roomInfo={roomInfo}/>
+      <AirbnbCard roomInfo={roomInfo}/>
+      <AirbnbCard roomInfo={roomInfo}/>
+      <AirbnbCard roomInfo={roomInfo}/>
+      <AirbnbCard roomInfo={roomInfo}/>
+      <AirbnbCard roomInfo={roomInfo}/>
     </div>
   )
 }
 
-export default Cardgrid
+export default CardGrid

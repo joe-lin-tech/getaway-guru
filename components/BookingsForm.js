@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-function BookingsForm() {
+function BookingsForm({ setRoomInfo }) {
     const successCallback = async (location, checkin, checkout) => {
         const params = {
             location: location,
@@ -13,8 +13,9 @@ function BookingsForm() {
               "Content-Type": "application/json",
             },
             body: JSON.stringify(params)
-          }).then((res) => {
-            console.log(res.json());
+          }).then(async (res) => {
+            setRoomInfo(await res.json());
+            // console.log(await res.json());
           }).catch((err) => {
             console.log(err);
           })
