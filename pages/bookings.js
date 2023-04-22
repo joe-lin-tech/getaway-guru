@@ -1,13 +1,33 @@
 import React, { useState } from 'react'
 
-
 function bookings() {
+    const successCallback = async (location, checkin, checkout) => {
+        const params = {
+            location: location,
+            checkin: checkin,
+            checkout: checkout,
+        }
+        const response = await fetch(`/api/airbnb`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(params)
+          }).then((res) => {
+            console.log(res.json());
+          }).catch((err) => {
+            console.log(err);
+          })
+    }
+
     const [location, setLocation] = useState();
     const [checkin, setCheckin] = useState();
     const [checkout, setCheckout] = useState();
 
-    const handleSubmit = (event) => {
-        
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('Submitted:', location, checkin, checkout);
+        successCallback(location, checkin, checkout);
     }
 
     return (
