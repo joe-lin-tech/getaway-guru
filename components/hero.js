@@ -10,7 +10,7 @@ const Hero = () => {
           <img
             src="/hero.jpeg"
             alt=""
-            className="inset-0 -z-10 h-full w-full object-fill"
+            className="inset-0 -z-10 h-full w-full object-cover"
           />
         </div>
         <div className="max-w-3xl py-32 sm:py-48 lg:py-56">
@@ -25,14 +25,17 @@ const Hero = () => {
           </div>
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
-              Plan your next vacation trip with Getaway-Guru.
+              Plan your next vacation trip with&nbsp;
+              <span className="block w-full text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-blue-500 lg:inline">
+                Getaway-Guru
+              </span>.
             </h1>
             <p className="mt-6 text-lg leading-8">
               Find the best bookings and travel recommendations.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <a
-                href="#"
+                onClick={() => console.log("HELLO")}
                 className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Get started
