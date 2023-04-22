@@ -7,8 +7,8 @@ const userSchema = new mongoose.Schema({
     password: String, // required.
     dateOfBirth: Date,
     currentLocation: locationSchema,
-    createdTrips: [tripSchema],
-    likedTrips: [tripSchema], 
+    createdTrips: [{type: mongoose.Schema.Types.ObjectId, ref: 'Trip'}],
+    likedTrips: [{type: mongoose.Schema.Types.ObjectId, ref: 'Trip'}], 
     dp: String,
 });
 
