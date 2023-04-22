@@ -1,5 +1,11 @@
 
-const Hero = () => {
+const Hero = ({ setShowForm }) => {
+
+  const handleButtonClick = () => {
+    console.log('display form');
+    setShowForm(true);
+  };
+
   return (
     <div className="bg-white w-full">
       <div className="relative isolate flex justify-center">
@@ -13,7 +19,7 @@ const Hero = () => {
             className="inset-0 -z-10 h-full w-full object-cover"
           />
         </div>
-        <div className="max-w-3xl py-32 sm:py-48 lg:py-56">
+        <div className="max-w-3xl py-32 sm:py-48 lg:py-56 h-screen">
           <div className="hidden sm:mb-8 sm:flex sm:justify-center">
             <div className="relative rounded-full px-3 py-1 text-sm leading-6">
               Announcing our next round of funding.{' '}
@@ -35,7 +41,8 @@ const Hero = () => {
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <a
-                onClick={() => console.log("HELLO")}
+                
+                onClick={handleButtonClick}
                 className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Get started

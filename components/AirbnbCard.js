@@ -34,7 +34,7 @@ export default function AirbnbCard({roomInfo}) {
   };
   console.log("roomInfo in AirbnbCard:" + roomInfo);
   // console.log("roomName:" + roomInfo.name);
-  console.log("roomTitle:" + roomInfo?.message?.results[0]?.name ?? "");
+  console.log("roomTitle:" + roomInfo?.name ?? "");
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -49,18 +49,18 @@ export default function AirbnbCard({roomInfo}) {
             <MoreVertIcon />
           </IconButton>
         }
-        title={roomInfo?.message?.results[0]?.name}
-        city={roomInfo?.message?.results[0]?.city}
+        title={roomInfo?.name}
+        city={roomInfo?.city}
       />
       <CardMedia
         component="img"
         height="194"
-        image={roomInfo?.message?.results[0]?.images[0]}
+        image={roomInfo?.images[0]}
         alt="Room Image"
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          Number of Bathrooms: {roomInfo?.message?.results[0]?.bathrooms}. Number of Bedrooms: {roomInfo?.message?.results[0]?.bedrooms}. Number of beds: {roomInfo?.message?.results[0]?.beds}. 1 bath
+          Number of Bathrooms: {roomInfo?.bathrooms}. Number of Bedrooms: {roomInfo?.bedrooms}. Number of beds: {roomInfo?.beds}. 1 bath
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -81,18 +81,18 @@ export default function AirbnbCard({roomInfo}) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Pricing: {roomInfo?.message?.results[0]?.price.rate} {roomInfo?.message?.results[0]?.price.currency}</Typography>
+          <Typography paragraph>Pricing: {roomInfo?.price.rate} {roomInfo?.price.currency}</Typography>
           <Typography paragraph>
-            Address: {roomInfo?.message?.results[0]?.address}
+            Address: {roomInfo?.address}
           </Typography>
           <Typography paragraph>
-            Amenities: {roomInfo?.message?.results[0]?.previewAmenities[0]}
+            Amenities: {roomInfo?.previewAmenities[0]}
           </Typography>
           <Typography paragraph>
-            Rating: {roomInfo?.message?.results[0]?.rating}
+            Rating: {roomInfo?.rating}
           </Typography>
           <Typography>
-            Airbnb URL: {roomInfo?.message?.results[0]?.url}
+            Airbnb URL: {roomInfo?.url}
           </Typography>
         </CardContent>
       </Collapse>
