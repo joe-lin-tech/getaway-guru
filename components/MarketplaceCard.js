@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import ButtonBase from '@mui/material/ButtonBase';
+import Modal from '@/components/Modal'
 
 const Img = styled('img')({
   margin: 'auto',
@@ -47,7 +48,7 @@ export default function MarketplaceCard({ trips }) {
             </Grid>
             <Grid item>
               <Typography sx={{ cursor: 'pointer' }} variant="body2">
-                View More
+                <Modal trips={trips}/>
               </Typography>
             </Grid>
           </Grid>
