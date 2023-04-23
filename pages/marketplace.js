@@ -11,9 +11,8 @@ const Marketplace = () => {
     useEffect(() => {
         console.log("hi2");
         getTrips(setTrips);
-        console.log(trips);
     },[])
-
+    console.log(trips);
 
       
   return (
@@ -25,7 +24,7 @@ const Marketplace = () => {
             <Searchbar />
         </div>
         <div className="pl-4 pr-4">
-            <MarketplaceGrid />
+            <MarketplaceGrid trips={trips}/>
         </div>
         
         <div>

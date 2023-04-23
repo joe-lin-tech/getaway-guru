@@ -1,18 +1,18 @@
 import React from 'react'
 import MarketplaceCard from '@/components/MarketplaceCard'
 
-function MarketplaceGrid() {
+function MarketplaceGrid({ trips }) {
+  console.log("trips in MarketplaceGrid:" , trips)
+  console.log("trips[2] in MarketplaceGrid:" , trips[2])
+
+  const items = trips;
+  console.log("items:", items);
+
   return (
     <div className="grid grid-cols-3 gap-5">
-        <MarketplaceCard />
-        <MarketplaceCard />
-        <MarketplaceCard />
-        <MarketplaceCard />
-        <MarketplaceCard />
-        <MarketplaceCard />
-        <MarketplaceCard />
-        <MarketplaceCard />
-        <MarketplaceCard />
+      {items && items.map((item) => {
+        return <MarketplaceCard trips={item} />;
+      })}
     </div>
   )
 }

@@ -12,7 +12,9 @@ const Img = styled('img')({
   maxHeight: '100%',
 });
 
-export default function MarketplaceCard() {
+export default function MarketplaceCard({ trips }) {
+  console.log("trips[2] in CardGrid:" , trips)
+  console.log("trips[2].name in CardGrid:" , trips.name)
   return (
     <Paper
       sx={{
@@ -33,13 +35,16 @@ export default function MarketplaceCard() {
           <Grid item xs container direction="column" spacing={2}>
             <Grid item xs>
               <Typography gutterBottom variant="subtitle1" component="div">
-                Dubai United Emirates
+                Dubai United Emirates. 
               </Typography>
               <Typography variant="body2" gutterBottom>
                 All Inclusive Resort Package • 3 persons
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                ID: 1030114
+                {trips?.name}
+                {trips?.city}
+                {trips?.userEmail}
+                {/* {trips?.locations} */}
               </Typography>
             </Grid>
             <Grid item>
