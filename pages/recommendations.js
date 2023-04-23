@@ -5,6 +5,8 @@ import { CheckCircleIcon, CheckIcon, ChevronUpDownIcon } from "@heroicons/react/
 import { Dialog, Listbox, Transition } from "@headlessui/react";
 import EntryForm from "@/components/EntryForm";
 import AirbnbCard from "@/components/AirbnbCard";
+import { useSession, getSession } from "next-auth/react"
+
 
 const categories = [
   { id: 1, name: 'Food' },
@@ -92,7 +94,7 @@ const PlacesCard = ({ index, place, dests, setDests }) => {
   )
 }
 
-const uploadTrip = async (tripName, places) => {
+const uploadTrip = async (tripName, places, session, city) => {
   console.log(places)
   console.log(JSON.stringify({
     name: "Trip Name",
@@ -106,8 +108,10 @@ const uploadTrip = async (tripName, places) => {
     },
     body: JSON.stringify({
       name: tripName,
+      userEmail: session.user.email,
       locations: places.map((p) => p.id),
-      media: places.map((p) => p.image_url)
+      media: places.map((p) => p.image_url),
+      city: city
     })
   }).then(async (res) => {
     console.log(res)
@@ -119,6 +123,7 @@ const uploadTrip = async (tripName, places) => {
 }
 
 const Recommendations = () => {
+  const { data: session, status } = useSession()
   const [position, setPosition] = useState(undefined)
   const [places, setPlaces] = useState([])
   const [foodPlaces, setFoodPlaces] = useState([])
@@ -272,7 +277,7 @@ const Recommendations = () => {
         <button
           type="button"
           className="rounded-md bg-indigo-500 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 mt-4"
-          onClick={() => uploadTrip(tripName, places)}
+          onClick={() => uploadTrip(tripName, places, session, formValues.city)}
         >
           Upload Trip
         </button>

@@ -6,6 +6,7 @@ const tripSchema = new mongoose.Schema({
     numberOfLikes: Number,
     userEmail: String,
     reviews: [{type: String}],
+    city: String,
     media:Array
 })
 
