@@ -92,7 +92,7 @@ const PlacesCard = ({ index, place, dests, setDests }) => {
   )
 }
 
-const uploadTrip = async (places) => {
+const uploadTrip = async (tripName, places) => {
   console.log(places)
   console.log(JSON.stringify({
     name: "Trip Name",
@@ -105,7 +105,7 @@ const uploadTrip = async (places) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      name: "Trip Name",
+      name: tripName,
       locations: places.map((p) => p.id),
       media: places.map((p) => p.image_url)
     })
@@ -138,6 +138,7 @@ const Recommendations = () => {
     zipcode: ""
   })
   const [bookings, setBookings] = useState([])
+  const [tripName, setTripName] = useState("")
 
   const render = (status) => {
     if (status == Status.FAILURE) return <div>Error</div>
@@ -267,10 +268,11 @@ const Recommendations = () => {
         >
           Find recommendations!
         </button>
+        <input type="text" value={tripName} onChange={(e) => setTripName(e.target.value)} className="text-black" />
         <button
           type="button"
           className="rounded-md bg-indigo-500 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 mt-4"
-          onClick={() => uploadTrip(places)}
+          onClick={() => uploadTrip(tripName, places)}
         >
           Upload Trip
         </button>
