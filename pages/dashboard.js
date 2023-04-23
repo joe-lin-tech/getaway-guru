@@ -1,6 +1,8 @@
 import Link from 'next/link'
+import { useSession, getSession } from "next-auth/react"
 
 const Dashboard = () => {
+
 return (
         <>
 <div class="bg-white w-full">

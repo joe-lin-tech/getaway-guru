@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import Hero from '@/components/hero'
 import Navigation from '@/components/navigation'
+import About from '@/components/About'
 import { useState } from 'react';
 
 
@@ -19,6 +20,8 @@ const Home = () => {
     >
       <Navigation />
       <Hero setShowForm={setShowForm} />
+      <About />
+      
     </main>
   )
 }
