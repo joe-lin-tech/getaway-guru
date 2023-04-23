@@ -8,7 +8,8 @@ const tripSchema = new mongoose.Schema({
     reviews: [{type: String}],
     city: String,
     description: String,
-    media:Array
+    media:Array,
+    budget: Number
 })
 
 const Trip = mongoose.models.Trip || mongoose.model('Trip', tripSchema)
