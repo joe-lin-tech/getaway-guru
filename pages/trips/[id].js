@@ -54,7 +54,7 @@ const getTrip = async (id, setTrip, setInfo) => {
   }).catch((err) => {
     console.log(err);
   })
-
+  setInfo([])
   result.trip.locations.map(async (l) => {
     console.log(l)
     await fetch(`/api/yelp/location`, {
@@ -121,6 +121,9 @@ const Trips = () => {
             </div>
 
             <p className="mt-6 text-gray-500">{trip.description}</p>
+            <ul>
+              {info.map((i) => <li key={i.name} className="text-gray-500 text-black">{i.name}</li>)}
+            </ul>
 
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
               <button
