@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { useSession, getSession } from "next-auth/react"
 import { redirect } from 'next/navigation';
 
+
 const Dashboard = () => {
   const { data: session, status } = useSession()
   if (status === "loading") {
