@@ -1,6 +1,7 @@
 import React from 'react'
 import MarketplaceGrid from '@/components/MarketplaceGrid'
 import Searchbar from '@/components/Searchbar'
+import Modal from '@/components/Modal'
 
 function marketplace() {
   return (
@@ -13,6 +14,9 @@ function marketplace() {
         </div>
         <div className="pl-4 pr-4">
             <MarketplaceGrid />
+        </div>
+        <div>
+            <Modal />
         </div>
     </div>
   )
