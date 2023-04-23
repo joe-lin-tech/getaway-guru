@@ -94,7 +94,7 @@ const PlacesCard = ({ index, place, dests, setDests }) => {
   )
 }
 
-const uploadTrip = async (tripName, tripDescription, places, session, city) => {
+const uploadTrip = async (tripName, tripDescription, places, session, city, budget) => {
   console.log(city + "THIS IS THE CITY")
   await fetch(`/api/trips/uploadTrip`, {
     method: "POST",
@@ -107,7 +107,8 @@ const uploadTrip = async (tripName, tripDescription, places, session, city) => {
       userEmail: session.user.email,
       locations: places.map((p) => p.id),
       media: places.map((p) => p.image_url),
-      city: city
+      city: city,
+      budget: budget
     })
   }).then(async (res) => {
     console.log(res)
@@ -276,7 +277,7 @@ const Recommendations = () => {
         <button
           type="button"
           className="rounded-md bg-indigo-500 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 mt-4"
-          onClick={() => uploadTrip(tripName, tripDescription, places, session, formValues.city)}
+          onClick={() => uploadTrip(tripName, tripDescription, places, session, formValues.city, formValues.budget)}
         >
           Upload Trip
         </button>
