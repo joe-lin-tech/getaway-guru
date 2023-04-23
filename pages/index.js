@@ -3,7 +3,6 @@ import { Inter } from 'next/font/google'
 import Hero from '@/components/hero'
 import Navigation from '@/components/Navigation'
 import { useState } from 'react';
-import Form from '@/components/form'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -19,8 +18,7 @@ const Home = () => {
       className={`flex h-full flex-col items-center justify-between ${inter.className}`}
     >
       <Navigation />
-      {showForm ? (<Form setShowForm={setShowForm} />) : (<Hero setShowForm={setShowForm} />)}
-
+      <Hero setShowForm={setShowForm} />
     </main>
   )
 }

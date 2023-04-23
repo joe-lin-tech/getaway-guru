@@ -1,11 +1,5 @@
 
-const Hero = ({ setShowForm }) => {
-
-  const handleButtonClick = () => {
-    console.log('display form');
-    setShowForm(true);
-  };
-
+const Hero = () => {
   return (
     <div className="bg-white w-full">
       <div className="relative isolate flex justify-center">
@@ -41,8 +35,7 @@ const Hero = ({ setShowForm }) => {
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <a
-                
-                onClick={handleButtonClick}
+                onClick={console.log("GET STARTED")}
                 className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Get started
