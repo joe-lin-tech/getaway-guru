@@ -41,7 +41,7 @@ const getData = async (position, setPlaces) => {
     longitude: position.lng,
     term: 'food'
   }
-  await fetch(`/api/yelp`, {
+  await fetch(`/api/yelp/businesses`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
