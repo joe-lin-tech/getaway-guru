@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {signIn} from 'next-auth/react';
 import {useRouter} from 'next/router'
-import Navigation from '@/components/navigation';
+import Navigation from '@/components/Mavigation';
 
 const Auth = () => {
   const handleClick = async (e) => {

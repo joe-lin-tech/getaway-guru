@@ -1,5 +1,5 @@
 import dbConnect from '../../../lib/dbConnect'
-const {Trip} = require("../../../models/trip.js");
+const { Trip } = require("../../../models/trip.js");
 
 
 export default async function handler(req, res) {

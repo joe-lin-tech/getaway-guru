@@ -1,7 +1,7 @@
 import { Wrapper, Status } from "@googlemaps/react-wrapper"
 import Map from "@/components/Map"
 import { useState, useEffect, Fragment } from "react"
-import { CheckCircleIcon, CheckIcon, ChevronUpDownIcon } from "@heroicons/react/24/outline";
+import { ArrowRightCircleIcon, CheckCircleIcon, CheckIcon, ChevronUpDownIcon } from "@heroicons/react/24/outline";
 import { Dialog, Listbox, Transition } from "@headlessui/react";
 import EntryForm from "@/components/EntryForm";
 import AirbnbCard from "@/components/AirbnbCard";
@@ -154,20 +154,20 @@ const Recommendations = () => {
   }, [])
 
   useEffect(() => {
-    console.log("BEFORE PLACES: ", foodDests, places)
     setPlaces([...Array.from(foodDests).map((i) => foodPlaces[i]), ...Array.from(museumDests).map((i) => museumPlaces[i])])
-    console.log("BEFORE: MARKERS", markers, places, typeof ([...Array.from(foodDests).map((i) => foodPlaces[i]), ...Array.from(museumDests).map((i) => museumPlaces[i])]))
+  }, [foodPlaces, foodDests, museumPlaces, museumDests])
+
+  useEffect(() => {
     for (let i = 0; i < markers.length; i++) markers[i].setMap(null)
     setMarkers(places.map((p) =>
       new google.maps.Marker({
         position: { lat: p.coordinates.latitude, lng: p.coordinates.longitude },
       })
     ))
-    console.log("RECOMMENDATIONS EVFFECT: ", markers)
-  }, [foodPlaces, foodDests, museumPlaces, museumDests])
+  }, [places])
+
 
   const handleSubmit = async () => {
-    console.log(formValues)
     await fetch(`/api/airbnb`, {
       method: "POST",
       headers: {
@@ -188,7 +188,7 @@ const Recommendations = () => {
     })
   }
 
-  if (!process.env.NEXT_PUBLIC_GOOGLE_MAPS || !position) return <div></div>
+  if (!process.env.NEXT_PUBLIC_GOOGLE_MAPS || !position) return <div>Loading...</div>
   return (
     <div className="grid grid-cols-4 bg-gray-100">
       <Transition.Root show={entryForm} as={Fragment}>
@@ -249,8 +249,14 @@ const Recommendations = () => {
                 leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
-                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white mx-24 my-20 px-4 pb-4 pt-5 text-left shadow-xl transition-all h-screen overflow-y-auto">
-                  <div className="grid grid-cols-4 gap-5">
+                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white mx-24 my-20 px-8 py-8 text-left shadow-xl transition-all h-screen overflow-y-auto">
+                  <div className="flex justify-between mb-4">
+                    <p className="text-2xl text-black font-bold">Airbnb Bookings</p>
+                    <button onClick={() => setBookingModal(false)}>
+                      <ArrowRightCircleIcon className="w-8 h-8 text-black" />
+                    </button>
+                  </div>
+                  <div className="grid grid-cols-3 gap-5">
                     {bookings.map((b, i) => <AirbnbCard key={i} roomInfo={b} />)}
                   </div>
                 </Dialog.Panel>

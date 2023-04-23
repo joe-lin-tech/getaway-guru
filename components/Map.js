@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react"
 const Map = ({ location, zoomLevel, markers }) => {
   const ref = useRef();
   const [map, setMap] = useState();
+  const [directions, setDirections] = useState();
 
   useEffect(() => {
     if (ref.current && !map) {
@@ -11,24 +12,29 @@ const Map = ({ location, zoomLevel, markers }) => {
   }, [ref, map, location, zoomLevel]);
 
   useEffect(() => {
-    // for (let i = 0; i < markers.length; i++) markers[i].setMap(null)
-    // setMarkers([]);
-    // const directions = new google.maps.DirectionsService();
-    // if (places.length > 1) {
-    //   directions.route({
-    //     origin: { lat: places[0].coordinates.latitude, lng: places[0].coordinates.longitude },
-    //     destination: { lat: places[places.length - 1].coordinates.latitude, lng: places[places.length - 1].coordinates.longitude },
-    //     travelMode: "DRIVING"
-    //   }, (res, status) => {
-    //     if (status == "OK") {
-    //       new google.maps.DirectionsRenderer({
-    //         suppressMarkers: true,
-    //         directions: res,
-    //         map: map
-    //       })
-    //     }
-    //   })
-    // }
+    for (let i = 0; i < markers.length; i++) markers[i].setMap(map)
+    if (directions) directions.setMap(null)
+    if (markers.length > 1) {
+      const directionsService = new google.maps.DirectionsService();
+      console.log(directions)
+      const waypoints = []
+      for (let j = 1; j < markers.length - 1; j++) waypoints.push({ location: markers[j].position })
+      directionsService.route({
+        origin: markers[0].position,
+        destination: markers[markers.length - 1].position,
+        travelMode: "DRIVING",
+        waypoints: waypoints
+      }, (res, status) => {
+        if (status == "OK") {
+          setDirections(new google.maps.DirectionsRenderer({
+            suppressMarkers: true,
+            directions: res,
+            map: map,
+            optimizeWaypoints: true
+          }))
+        }
+      })
+    }
     // places.map((p) => {
     //   new google.maps.Marker({
     //     position: { lat: p.coordinates.latitude, lng: p.coordinates.longitude },
@@ -37,9 +43,6 @@ const Map = ({ location, zoomLevel, markers }) => {
     //     // icon: "/duck.webp"
     //   })
     // })
-    console.log("MARKERS IN MAP", markers)
-    for (let i = 0; i < markers.length; i++) markers[i].setMap(map)
-    console.log("MAP EFFECT")
   }, [map, markers])
 
   return (

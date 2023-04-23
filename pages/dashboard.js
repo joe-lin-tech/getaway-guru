@@ -26,12 +26,12 @@ const Dashboard = () => {
   }
   
 
-return (
-        <>
-<div class="bg-white w-full">
-  <div
-        className="absolute -z-10 h-full w-full backdrop-filter bg-[url('/dashboard.jpg')] bg-cover"
-        aria-hidden="true"
+  return (
+    <>
+      <div class="bg-white w-full">
+        <div
+          className="absolute -z-10 h-full w-full backdrop-filter bg-[url('/dashboard.jpg')] bg-cover"
+          aria-hidden="true"
         >
         {/* <img
         src="/hero.jpeg"

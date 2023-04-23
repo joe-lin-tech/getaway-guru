@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import MarketplaceGrid from '@/components/MarketplaceGrid'
 import Searchbar from '@/components/Searchbar'
 import Modal from '@/components/Modal'
-import { useState, useEffect, Fragment } from "react"
+import { useState, Fragment } from "react"
 import Navigation from '@/components/navigation'
 
 
@@ -13,9 +13,9 @@ const Marketplace = () => {
     useEffect(() => {
         console.log("hi2");
         getTrips(setTrips);
-    },[])
+        console.log(trips);
+    }, [])
     console.log(trips);
-
       
   return (
     <>

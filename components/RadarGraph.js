@@ -30,7 +30,7 @@ class App extends React.Component {
       }
     ];
 
-	const captions = {
+	  const captions = {
       // columns
       Food: 'Food Capacity',
       Museums: 'Museums',
