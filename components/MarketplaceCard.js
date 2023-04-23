@@ -28,21 +28,19 @@ export default function MarketplaceCard({ trips }) {
       <Grid container spacing={2}>
         <Grid item>
           <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Img alt="card" src="/static/images/grid/complex.jpg" />
+            <Img alt="card" src={trips?.media[0]} />
           </ButtonBase>
         </Grid>
         <Grid item xs={12} sm container>
           <Grid item xs container direction="column" spacing={2}>
             <Grid item xs>
               <Typography gutterBottom variant="subtitle1" component="div">
-                Dubai United Emirates. 
+                {trips?.name}
               </Typography>
               <Typography variant="body2" gutterBottom>
-                All Inclusive Resort Package • 3 persons
+                {trips?.city} • 3 persons
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {trips?.name}
-                {trips?.city}
                 {trips?.userEmail}
                 {/* {trips?.locations} */}
               </Typography>
