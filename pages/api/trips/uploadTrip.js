@@ -3,10 +3,17 @@ const {Trip} = require("../../../models/trip.js");
 
 
 export default async function handler(req, res) {
+    console.log("HIELEGHWIEHWLDFLDSJFLJLDJFLJDSLFJSDLFJDSLJFDSJLFDSLJFLDSJFJLSDFJLp")
     await dbConnect()
 
-    const { name } = req.body;
-    const trip = new Trip({name});
+    console.log("HANDLE THAT BITCH")
+    const { name, locations, media } = req.body;
+    const trip = new Trip({
+        name: name,
+        locations: locations,
+        numberOfLikes: 0,
+        media: media
+    });
     console.log(trip);
     
     try {

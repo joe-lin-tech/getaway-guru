@@ -8,7 +8,7 @@ export default function handler(req, res) {
   const headers = {
     'Authorization': `Bearer ${apiKey}`
   };
-  console.log(latitude);
+  
   const params = {
     latitude: `${latitude}`,
     longitude: `${longitude}`,
