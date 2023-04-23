@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { useSession, getSession } from "next-auth/react"
-
+import { redirect } from 'next/navigation';
 
 const Dashboard = () => {
   const { data: session, status } = useSession()
@@ -9,7 +9,7 @@ const Dashboard = () => {
   }
 
   if (status === "unauthenticated") {
-    return <p>Access Denied</p>
+    redirect('/auth')
   }
   console.log(session.user);
 
@@ -58,7 +58,7 @@ return (
     <div class="flex-1 px-2 sm:px-0">
       <div class="flex justify-between items-center">
         <div className="flex-col justify-start">
-        <h3 class="text-4xl font-light text-black">Welcome back, Joe Lin!</h3>
+        <h3 class="text-4xl font-light text-black">Welcome back, {session.user.name}!</h3>
         <h4 class="text-3xl font-extralight text-black">Liked Trips</h4>
         </div>
         <div class="inline-flex items-center space-x-2">
