@@ -54,7 +54,7 @@ export default function MarketplaceCard({ trips }) {
           </Grid>
           <Grid item>
             <Typography variant="subtitle1" component="div">
-              $19.00
+              ${trips?.budget}
             </Typography>
           </Grid>
         </Grid>

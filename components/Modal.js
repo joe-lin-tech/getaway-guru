@@ -1,5 +1,6 @@
 import React from "react";
 import RadarGraph from '@/components/RadarGraph'
+import ShareButton from '@/components/ShareButton'
 
 export default function Modal({ trips }) {
   const [showModal, setShowModal] = React.useState(false);
@@ -38,7 +39,7 @@ export default function Modal({ trips }) {
                 <div className="relative p-6 flex-auto">
                   <p className="my-4 text-slate-500 text-lg leading-relaxed">
                     City: {trips?.city}
-                    Total Cost: $190
+                    Budget: ${trips?.budget}
                     Flight: Southwest Boeing 787 from San Francisco to Dubai.
                     Hotel Room: 23rd floor, Marina Bay Sands.
                     Travel Agenda: {trips?.locations}
@@ -48,6 +49,9 @@ export default function Modal({ trips }) {
                     Cost Breakdown: Bar Graph & Radar Graph
                   </p>
                   <RadarGraph />
+                  <div className="pt-5 pb-10">
+                  <ShareButton url={trips._id}/>
+                  </div>
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
