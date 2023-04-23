@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import BookingsForm from '@/components/BookingsForm'
-import CardGrid from '@/components/CardGrid'
+import AirbnbGrid from '@/components/AirbnbGrid'
 
 function bookings() {
     const [roomInfo, setRoomInfo] = useState();
@@ -8,7 +8,7 @@ function bookings() {
     return(
         <div>
             <BookingsForm setRoomInfo={setRoomInfo} />
-            <CardGrid roomInfo={roomInfo} />
+            <AirbnbGrid roomInfo={roomInfo} />
         </div>
     )
 }
