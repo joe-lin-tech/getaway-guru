@@ -8,11 +8,12 @@ import mongoose from 'mongoose';
 export default async function handler(req, res) {
     await dbConnect()
 
-    const { name, locations, media, userEmail, city } = req.body;
+    const { name, description, locations, media, userEmail, city } = req.body;
     var myId = new mongoose.Types.ObjectId();
     const trip = new Trip({
         _id: myId,
         name: name,
+        description: description,
         locations: locations,
         numberOfLikes: 0,
         media: media,

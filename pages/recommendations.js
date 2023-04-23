@@ -94,13 +94,8 @@ const PlacesCard = ({ index, place, dests, setDests }) => {
   )
 }
 
-const uploadTrip = async (tripName, places, session, city) => {
-  console.log(places)
-  console.log(JSON.stringify({
-    name: "Trip Name",
-    locations: places.map((p) => p.id),
-    media: places.map((p) => p.image_url)
-  }))
+const uploadTrip = async (tripName, tripDescription, places, session, city) => {
+  console.log(city + "THIS IS THE CITY")
   await fetch(`/api/trips/uploadTrip`, {
     method: "POST",
     headers: {
@@ -108,6 +103,7 @@ const uploadTrip = async (tripName, places, session, city) => {
     },
     body: JSON.stringify({
       name: tripName,
+      description: tripDescription,
       userEmail: session.user.email,
       locations: places.map((p) => p.id),
       media: places.map((p) => p.image_url),
@@ -144,6 +140,8 @@ const Recommendations = () => {
   })
   const [bookings, setBookings] = useState([])
   const [tripName, setTripName] = useState("")
+  const [tripDescription, setTripDescription] = useState("")
+
 
   const render = (status) => {
     if (status == Status.FAILURE) return <div>Error</div>
@@ -274,10 +272,11 @@ const Recommendations = () => {
           Find recommendations!
         </button>
         <input type="text" value={tripName} onChange={(e) => setTripName(e.target.value)} className="text-black" />
+        <input type="text" value={tripDescription} onChange={(e) => setTripDescription(e.target.value)} className="text-black" />
         <button
           type="button"
           className="rounded-md bg-indigo-500 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 mt-4"
-          onClick={() => uploadTrip(tripName, places, session, formValues.city)}
+          onClick={() => uploadTrip(tripName, tripDescription, places, session, formValues.city)}
         >
           Upload Trip
         </button>

@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     await dbConnect()
 
     const { userEmail, trip_id } = req.body;
-    const user = await User.findOneAndUpdate({email: userEmail}, {"$push": { "likedTrips": trip_id } })
+    const user = await User.findOneAndUpdate({email: userEmail}, {$push: { likedTrips: trip_id } })
     const trip = await Trip.findOneAndUpdate({_id: trip_id}, {$inc: { numberOfLikes: 1 }})
     console.log(user);
     
