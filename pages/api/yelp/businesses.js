@@ -17,10 +17,8 @@ export default function handler(req, res) {
 
   axios.get(url, { headers, params })
     .then(response => {
-      console.log(response.data);
-      return res.status(200).json({
-        message: response.data
-      });
+      // console.log(response.data);
+      return res.status(200).json(response.data);
     })
     .catch(error => {
       // console.error(error);

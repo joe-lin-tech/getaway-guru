@@ -10,14 +10,14 @@ const Hero = ({ setShowForm }) => {
     <div className="bg-white w-full">
       <div className="relative isolate flex justify-center">
         <div
-          className="absolute -z-10 h-full w-full blur-sm"
+          className="absolute -z-10 h-full w-full backdrop-blur-xl bg-[url('/hero.jpeg')] bg-cover"
           aria-hidden="true"
         >
-          <img
+          {/* <img
             src="/hero.jpeg"
             alt=""
             className="inset-0 -z-10 h-full w-full object-cover"
-          />
+          /> */}
         </div>
         <div className="max-w-3xl py-32 sm:py-48 lg:py-56 h-screen">
           <div className="hidden sm:mb-8 sm:flex sm:justify-center">
