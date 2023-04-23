@@ -1,4 +1,19 @@
+import {useState} from 'react';
+import {signIn} from 'next-auth/react';
+import {useRouter} from 'next/router'
+
 const Auth = () => {
+
+  const router = useRouter();
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+    console.log("hey got to sign in")
+    const result = await signIn('google');
+    console.log(result);
+  };
+
+
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -9,12 +24,12 @@ const Auth = () => {
             alt="Your Company"
           />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">
-            Sign in to your account
+            Login with Google.
           </h2>
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form className="space-y-6" action="#" method="POST" onSubmit = {handleClick}>
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-white">
                 Email address
@@ -25,7 +40,6 @@ const Auth = () => {
                   name="email"
                   type="email"
                   autoComplete="email"
-                  required
                   className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -48,7 +62,6 @@ const Auth = () => {
                   name="password"
                   type="password"
                   autoComplete="current-password"
-                  required
                   className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -59,7 +72,13 @@ const Auth = () => {
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
               >
-                Sign in
+                Login with Google!
+              </button>
+              <button
+                type='button'
+                // className={classes.toggle}
+                >
+                Login with Google?
               </button>
             </div>
           </form>
@@ -74,6 +93,7 @@ const Auth = () => {
       </div>
     </>
   )
+
 }
 
 export default Auth

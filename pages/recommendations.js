@@ -3,7 +3,7 @@ import Map from "@/components/Map"
 import { useState, useEffect, Fragment } from "react"
 import { CheckCircleIcon, CheckIcon, ChevronUpDownIcon } from "@heroicons/react/24/outline";
 import { Dialog, Listbox, Transition } from "@headlessui/react";
-import Form from "@/components/Form";
+import Form from "@/components/form";
 
 const categories = [
   {
