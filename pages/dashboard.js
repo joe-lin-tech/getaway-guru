@@ -114,13 +114,13 @@ return (
               })
               }*/}
               <Card name="First trip!" city="Los Angeles" numberOfLikes={ 100 } src="./LA.jpg"/>
-              <Card name="Europe trip" city="Rome" numberOfLikes={ 74 } />
-              <Card name="Asia Trip" city="Tokyo" numberOfLikes={ 81 } />
-              <Card name="Touring the World" city="Vancouver" numberOfLikes={ 123 } />
-              <Card name="Sahara Desert Trip" city="Dunes" numberOfLikes={90} />
-              <Card name="Guess the Location" city="???" numberOfLikes={43} />
-              <Card name="USA" city="New York City" numberOfLikes={75} />
-              <Card name="Space" city="Moon" numberOfLikes={230} />
+              <Card name="Europe trip" city="Rome" numberOfLikes={74} src="./Rome.jpg" />
+              <Card name="Asia Trip" city="Tokyo" numberOfLikes={ 81 } src="./Tokyo.jpg" />
+              <Card name="Touring the World" city="Vancouver" numberOfLikes={ 123 } src="./Vancouver.jpg" />
+              <Card name="Sahara Desert Trip" city="Dunes" numberOfLikes={90} src="./Dunes.jpg" />
+              <Card name="Guess the Location" city="???" numberOfLikes={43} src="./Mystery.jpg" />
+              <Card name="USA" city="New York City" numberOfLikes={75} src="./NYC.jpg" />
+              <Card name="Space" city="Moon" numberOfLikes={230} src="./Moon.jpg" />
               </div>
     </div>
   </div>
