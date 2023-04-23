@@ -12,7 +12,9 @@ const Img = styled('img')({
   maxHeight: '100%',
 });
 
-export default function MarketplaceCard() {
+export default function MarketplaceCard({ trips }) {
+  console.log("trips[2] in CardGrid:" , trips)
+  console.log("trips[2].name in CardGrid:" , trips.name)
   return (
     <Paper
       sx={{
@@ -26,20 +28,21 @@ export default function MarketplaceCard() {
       <Grid container spacing={2}>
         <Grid item>
           <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Img alt="card" src="/static/images/grid/complex.jpg" />
+            <Img alt="card" src={trips?.media[0]} />
           </ButtonBase>
         </Grid>
         <Grid item xs={12} sm container>
           <Grid item xs container direction="column" spacing={2}>
             <Grid item xs>
               <Typography gutterBottom variant="subtitle1" component="div">
-                Dubai United Emirates
+                {trips?.name}
               </Typography>
               <Typography variant="body2" gutterBottom>
-                All Inclusive Resort Package • 3 persons
+                {trips?.city} • 3 persons
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                ID: 1030114
+                {trips?.userEmail}
+                {/* {trips?.locations} */}
               </Typography>
             </Grid>
             <Grid item>
