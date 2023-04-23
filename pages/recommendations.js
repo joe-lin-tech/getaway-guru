@@ -3,33 +3,16 @@ import Map from "@/components/Map"
 import { useState, useEffect, Fragment } from "react"
 import { CheckCircleIcon, CheckIcon, ChevronUpDownIcon } from "@heroicons/react/24/outline";
 import { Dialog, Listbox, Transition } from "@headlessui/react";
-import Form from "@/components/form";
+import EntryForm from "@/components/EntryForm";
+import AirbnbCard from "@/components/AirbnbCard";
 
 const categories = [
-  {
-    id: 1,
-    name: 'Food',
-  },
-  {
-    id: 2,
-    name: 'Museum'
-  },
-  {
-    id: 3,
-    name: 'Night Life'
-  },
-  {
-    id: 4,
-    name: 'Nature'
-  },
-  {
-    id: 5,
-    name: 'Theater'
-  },
-  {
-    id: 6,
-    name: 'Events'
-  }
+  { id: 1, name: 'Food' },
+  { id: 2, name: 'Museum' },
+  { id: 3, name: 'Night Life' },
+  { id: 4, name: 'Nature' },
+  { id: 5, name: 'Theater' },
+  { id: 6, name: 'Events' }
 ]
 
 const classNames = (...classes) => {
@@ -143,8 +126,18 @@ const Recommendations = () => {
   const [museumPlaces, setMuseumPlaces] = useState([])
   const [museumDests, setMuseumDests] = useState(new Set())
   const [selected, setSelected] = useState(categories[0])
-  const [formOpen, setFormOpen] = useState(true)
+  const [entryForm, setEntryForm] = useState(true)
+  const [bookingModal, setBookingModal] = useState(false)
   const [markers, setMarkers] = useState([])
+  const [formValues, setFormValues] = useState({
+    startDate: "",
+    endDate: "",
+    budget: 0,
+    city: "",
+    state: "California",
+    zipcode: ""
+  })
+  const [bookings, setBookings] = useState([])
 
   const render = (status) => {
     if (status == Status.FAILURE) return <div>Error</div>
@@ -158,7 +151,7 @@ const Recommendations = () => {
   useEffect(() => {
     console.log("BEFORE PLACES: ", foodDests, places)
     setPlaces([...Array.from(foodDests).map((i) => foodPlaces[i]), ...Array.from(museumDests).map((i) => museumPlaces[i])])
-    console.log("BEFORE: MARKERS", markers, places, typeof([...Array.from(foodDests).map((i) => foodPlaces[i]), ...Array.from(museumDests).map((i) => museumPlaces[i])]))
+    console.log("BEFORE: MARKERS", markers, places, typeof ([...Array.from(foodDests).map((i) => foodPlaces[i]), ...Array.from(museumDests).map((i) => museumPlaces[i])]))
     for (let i = 0; i < markers.length; i++) markers[i].setMap(null)
     setMarkers(places.map((p) =>
       new google.maps.Marker({
@@ -168,11 +161,33 @@ const Recommendations = () => {
     console.log("RECOMMENDATIONS EVFFECT: ", markers)
   }, [foodPlaces, foodDests, museumPlaces, museumDests])
 
+  const handleSubmit = async () => {
+    console.log(formValues)
+    await fetch(`/api/airbnb`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        location: formValues.city,
+        checkin: formValues.startDate,
+        checkout: formValues.endDate
+      })
+    }).then(async (res) => {
+      const result = await res.json();
+      setBookings(result.message.results)
+      setEntryForm(false)
+      setBookingModal(true)
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+
   if (!process.env.NEXT_PUBLIC_GOOGLE_MAPS || !position) return <div></div>
   return (
     <div className="grid grid-cols-4 bg-gray-100">
-      <Transition.Root show={formOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={setFormOpen}>
+      <Transition.Root show={entryForm} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={setEntryForm}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -197,7 +212,42 @@ const Recommendations = () => {
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
                 <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:p-6">
-                  <Form setFormOpen={setFormOpen}/>
+                  <EntryForm handleSubmit={handleSubmit} formValues={formValues} setFormValues={setFormValues} />
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition.Root>
+      <Transition.Root show={bookingModal} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={setBookingModal}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 z-10 overflow-y-auto">
+            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                enterTo="opacity-100 translate-y-0 sm:scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              >
+                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white mx-24 my-20 px-4 pb-4 pt-5 text-left shadow-xl transition-all h-screen overflow-y-auto">
+                  <div className="grid grid-cols-4 gap-5">
+                    {bookings.map((b, i) => <AirbnbCard key={i} roomInfo={b} />)}
+                  </div>
                 </Dialog.Panel>
               </Transition.Child>
             </div>

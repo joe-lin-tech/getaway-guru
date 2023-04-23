@@ -2,7 +2,6 @@ import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Collapse from '@mui/material/Collapse';
@@ -26,15 +25,12 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function AirbnbCard({roomInfo}) {
+export default function AirbnbCard({ roomInfo }) {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  console.log("roomInfo in AirbnbCard:" + roomInfo);
-  // console.log("roomName:" + roomInfo.name);
-  console.log("roomTitle:" + roomInfo?.name ?? "");
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -49,15 +45,18 @@ export default function AirbnbCard({roomInfo}) {
             <MoreVertIcon />
           </IconButton>
         }
-        title={roomInfo?.name}
+        title={<p className="text-lg font-bold line-clamp-2">{roomInfo.name}</p>}
         city={roomInfo?.city}
       />
-      <CardMedia
+      {/* <CardMedia
         component="img"
         height="194"
         image={roomInfo?.images[0]}
         alt="Room Image"
-      />
+      /> */}
+      <div className="group aspect-h-7 aspect-w-10 block w-full overflow-hidden bg-gray-100">
+        <img src={roomInfo.images[0]} alt="" className="pointer-events-none object-cover" />
+      </div>
       <CardContent>
         <Typography variant="body2" color="text.secondary">
           Number of Bathrooms: {roomInfo?.bathrooms}. Number of Bedrooms: {roomInfo?.bedrooms}. Number of beds: {roomInfo?.beds}. 1 bath
