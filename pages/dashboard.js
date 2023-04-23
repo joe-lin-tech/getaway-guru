@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { useSession, getSession } from "next-auth/react"
 
 const Dashboard = () => {
+<<<<<<< HEAD
   const { data: session, status } = useSession()
   if (status === "loading") {
     return <p>Loading...</p>
@@ -11,6 +12,8 @@ const Dashboard = () => {
     return <p>Access Denied</p>
   }
   console.log(session.user);
+=======
+>>>>>>> 55af3ec48f5176aa9def2d9bcc5a34a192032f1d
 
 return (
         <>
