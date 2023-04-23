@@ -4,16 +4,12 @@ import {useRouter} from 'next/router'
 import Navigation from '@/components/navigation';
 
 const Auth = () => {
-
-  const router = useRouter();
-
   const handleClick = async (e) => {
     e.preventDefault();
     console.log("hey got to sign in")
     const result = await signIn('google');
     console.log(result);
   };
-
 
   return (
     <>
@@ -84,7 +80,7 @@ const Auth = () => {
               <button
                 type='button'
                 // className={classes.toggle}
-                >
+              >
                 Login with Google?
               </button>
             </div>

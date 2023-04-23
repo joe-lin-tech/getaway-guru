@@ -1,5 +1,5 @@
 import React from "react";
-import RadarGraph from '@/components/RadarGraph'
+// import RadarGraph from '@/components/RadarGraph'
 
 export default function Modal() {
   const [showModal, setShowModal] = React.useState(false);
@@ -46,7 +46,7 @@ export default function Modal() {
                     Monuments:
                     Cost Breakdown: Bar Graph & Radar Graph
                   </p>
-                  <RadarGraph />
+                  {/* <RadarGraph /> */}
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
