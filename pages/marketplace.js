@@ -3,6 +3,7 @@ import MarketplaceGrid from '@/components/MarketplaceGrid'
 import Searchbar from '@/components/Searchbar'
 import Modal from '@/components/Modal'
 import { useState, useEffect, Fragment } from "react"
+import Navigation from '@/components/navigation'
 
 
 
@@ -17,8 +18,12 @@ const Marketplace = () => {
 
       
   return (
-    <div>
-        <div className="text-center pt-8 pb-8">
+    <>
+    <Navigation />
+      <div className="absolute bg-gray-200"
+      aria-hidden="true">
+        
+      <div className="text-center pt-8 pb-8 text-3xl font-normal text-black font-mono">
             <h1>Marketplace</h1>
         </div>
         <div className="flex items-center justify-center pb-8">
@@ -27,7 +32,8 @@ const Marketplace = () => {
         <div className="pl-4 pr-4">
             <MarketplaceGrid trips={trips}/>
         </div>
-    </div>
+        </div>
+    </>
   )
 }
 

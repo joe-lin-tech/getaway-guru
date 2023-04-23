@@ -5,6 +5,7 @@ import ReactTypingEffect from 'react-typing-effect';
 import History from '@/components/History'
 import Card from '@/components/Card'
 import { useState, useEffect } from "react"
+import { waitUntilSymbol } from 'next/dist/server/web/spec-extension/fetch-event';
 
 
 const Dashboard = () => {
@@ -108,10 +109,18 @@ return (
       </div>
                   
             <div class="mb-10 sm:mb-0 mt-4 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-              {trips.map((t) => {
+              {/*{trips.map((t) => {
                 <Card name={t.name} city={t.city} numberOfLikes={t.numberOfLikes} />
               })
-              }
+              }*/}
+              <Card name="First trip!" city="Los Angeles" numberOfLikes={ 100 } src="./LA.jpg"/>
+              <Card name="Europe trip" city="Rome" numberOfLikes={ 74 } />
+              <Card name="Asia Trip" city="Tokyo" numberOfLikes={ 81 } />
+              <Card name="Touring the World" city="Vancouver" numberOfLikes={ 123 } />
+              <Card name="Sahara Desert Trip" city="Dunes" numberOfLikes={90} />
+              <Card name="Guess the Location" city="???" numberOfLikes={43} />
+              <Card name="USA" city="New York City" numberOfLikes={75} />
+              <Card name="Space" city="Moon" numberOfLikes={230} />
               </div>
     </div>
   </div>
