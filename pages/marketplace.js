@@ -27,9 +27,11 @@ const Marketplace = () => {
         <div className="pl-4 pr-4">
             <MarketplaceGrid />
         </div>
+        
         <div>
             <Modal />
         </div>
+  
     </div>
   )
 }

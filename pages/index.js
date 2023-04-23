@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import Hero from '@/components/Hero'
-import Navigation from '@/components/Navigation'
+import Navigation from '@/components/navigation'
 import About from '@/components/About'
 
 
