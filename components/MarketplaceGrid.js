@@ -8,6 +8,10 @@ function MarketplaceGrid({ trips }) {
   const items = trips;
   console.log("items:", items);
 
+  if (!items) {
+    return <div></div>
+  }
+
   return (
     <div className="grid grid-cols-3 gap-5">
       {items && items.map((item) => {

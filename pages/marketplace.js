@@ -7,6 +7,7 @@ import { useState, useEffect, Fragment } from "react"
 
 
 const Marketplace = () => {
+  
     const [trips, setTrips] = useState([]);
     useEffect(() => {
         console.log("hi2");

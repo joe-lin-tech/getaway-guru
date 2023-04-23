@@ -1,10 +1,21 @@
 import Link from 'next/link'
 import { useSession, getSession } from "next-auth/react"
 import { redirect } from 'next/navigation';
+import ReactTypingEffect from 'react-typing-effect';
+import History from '@/components/History'
+import Card from '@/components/Card'
+import { useState, useEffect } from "react"
 
 
 const Dashboard = () => {
   const { data: session, status } = useSession()
+  const [trips, setTrips] = useState([]);
+  useEffect(() => {
+    console.log("hi2");
+    getUser(setTrips, session);
+    console.log(trips);
+  }, [])
+  
   if (status === "loading") {
     return <p>Loading...</p>
   }
@@ -12,7 +23,7 @@ const Dashboard = () => {
   if (status === "unauthenticated") {
     redirect('/auth')
   }
-  console.log(session.user);
+  
 
 return (
         <>
@@ -59,8 +70,28 @@ return (
     <div class="flex-1 px-2 sm:px-0">
       <div class="flex justify-between items-center">
         <div className="flex-col justify-start">
-        <h3 class="text-4xl font-light text-black">Welcome back, {session.user.name}!</h3>
-        <h4 class="text-3xl font-extralight text-black">Liked Trips</h4>
+        {/*<h3 class="text-4xl font-bold text-black font-mono">Welcome back, {session.user.name}!</h3> */}
+                <ReactTypingEffect
+                  text={["Welcome back, " + session.user.name + "!"]}
+                  eraseDelay={60000}
+                  cursorRenderer={cursor => <h1 className="text-4xl font-bold text-black font-mono">{cursor}</h1>}
+                  displayTextRenderer={(text, i) => {
+                    return (
+                      <h1 className="text-4xl font-bold text-black font-mono">
+                        {text.split('').map((char, i) => {
+                          const key = `${i}`;
+                          return (
+                            <span
+                              key={key}
+
+                            >{char}</span>
+                          );
+                        })}
+                      </h1>
+                    );
+                  }}
+                />
+        <h4 class="text-3xl font-normal text-black font-mono">Liked Trips</h4>
         </div>
         <div class="inline-flex items-center space-x-2">
           <a class="bg-gray-900 text-white/50 p-2 rounded-md hover:text-white smooth-hover" href="#">
@@ -75,56 +106,13 @@ return (
           </a>
         </div>
       </div>
-      <div class="mb-10 sm:mb-0 mt-4 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        <div class="relative group bg-gray-900 py-10 sm:py-20 px-4 flex flex-col space-y-2 items-center cursor-pointer rounded-md hover:bg-gray-900/80 hover:smooth-hover">
-          <img class="w-20 h-20 object-cover object-center rounded-full" src="https://images.unsplash.com/photo-1547592180-85f173990554?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80" alt="cuisine" />
-          <h4 class="text-white text-2xl font-bold capitalize text-center">Trips</h4>
-          <p class="text-white/50">07 members</p>
-          <p class="absolute top-2 text-white/20 inline-flex items-center text-xs">22 Online <span class="ml-2 w-2 h-2 block bg-green-500 rounded-full group-hover:animate-pulse"></span></p>
-        </div>
-        <div class="relative group bg-gray-900 py-10 sm:py-20 px-4 flex flex-col space-y-2 items-center cursor-pointer rounded-md hover:bg-gray-900/80 hover:smooth-hover">
-          <img class="w-20 h-20 object-cover object-center rounded-full" src="https://images.unsplash.com/photo-1547592180-85f173990554?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80" alt="cuisine" />
-          <h4 class="text-white text-2xl font-bold capitalize text-center">Cuisine</h4>
-          <p class="text-white/50">55 members</p>
-          <p class="absolute top-2 text-white/20 inline-flex items-center text-xs">22 Online <span class="ml-2 w-2 h-2 block bg-green-500 rounded-full group-hover:animate-pulse"></span></p>
-        </div>
-        <div class="relative group bg-gray-900 py-10 sm:py-20 px-4 flex flex-col space-y-2 items-center cursor-pointer rounded-md hover:bg-gray-900/80 hover:smooth-hover">
-          <img class="w-20 h-20 object-cover object-center rounded-full" src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1171&q=80" alt="art" />
-          <h4 class="text-white text-2xl font-bold capitalize text-center">Art</h4>
-          <p class="text-white/50">132 members</p>
-          <p class="absolute top-2 text-white/20 inline-flex items-center text-xs">4 Online <span class="ml-2 w-2 h-2 block bg-green-500 rounded-full group-hover:animate-pulse"></span></p>
-        </div>
-        <div class="relative group bg-gray-900 py-10 sm:py-20 px-4 flex flex-col space-y-2 items-center cursor-pointer rounded-md hover:bg-gray-900/80 hover:smooth-hover">
-          <img class="w-20 h-20 object-cover object-center rounded-full" src="https://images.unsplash.com/photo-1560419015-7c427e8ae5ba?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="gaming" />
-          <h4 class="text-white text-2xl font-bold capitalize text-center">Gaming</h4>
-          <p class="text-white/50">207 members</p>
-          <p class="absolute top-2 text-white/20 inline-flex items-center text-xs">0 Online <span class="ml-2 w-2 h-2 block bg-red-400 rounded-full group-hover:animate-pulse"></span></p>
-        </div>
-        <div class="relative group bg-gray-900 py-10 sm:py-20 px-4 flex flex-col space-y-2 items-center cursor-pointer rounded-md hover:bg-gray-900/80 hover:smooth-hover">
-          <img class="w-20 h-20 object-cover object-center rounded-full" src="https://images.unsplash.com/photo-1485846234645-a62644f84728?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1159&q=80" alt="cinema" />
-          <h4 class="text-white text-2xl font-bold capitalize text-center">cinema</h4>
-          <p class="text-white/50">105 members</p>
-          <p class="absolute top-2 text-white/20 inline-flex items-center text-xs">12 Online <span class="ml-2 w-2 h-2 block bg-green-500 rounded-full group-hover:animate-pulse"></span></p>
-        </div>
-        <div class="relative group bg-gray-900 py-10 sm:py-20 px-4 flex flex-col space-y-2 items-center cursor-pointer rounded-md hover:bg-gray-900/80 hover:smooth-hover">
-          <img class="w-20 h-20 object-cover object-center rounded-full" src="https://images.unsplash.com/photo-1484704849700-f032a568e944?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80" alt="song" />
-          <h4 class="text-white text-2xl font-bold capitalize text-center">Song</h4>
-          <p class="text-white/50">67 members</p>
-          <p class="absolute top-2 text-white/20 inline-flex items-center text-xs">3 Online <span class="ml-2 w-2 h-2 block bg-green-500 rounded-full group-hover:animate-pulse"></span></p>
-        </div>
-        <div class="relative group bg-gray-900 py-10 sm:py-20 px-4 flex flex-col space-y-2 items-center cursor-pointer rounded-md hover:bg-gray-900/80 hover:smooth-hover">
-          <img class="w-20 h-20 object-cover object-center rounded-full" src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80" alt="code" />
-          <h4 class="text-white text-2xl font-bold capitalize text-center">Code</h4>
-          <p class="text-white/50">83 members</p>
-          <p class="absolute top-2 text-white/20 inline-flex items-center text-xs">43 Online <span class="ml-2 w-2 h-2 block bg-green-500 rounded-full group-hover:animate-pulse"></span></p>
-        </div>
-        <div class="relative group bg-gray-900 py-10 sm:py-20 px-4 flex flex-col space-y-2 items-center cursor-pointer rounded-md hover:bg-gray-900/80 hover:smooth-hover">
-          <img class="w-20 h-20 object-cover object-center rounded-full" src="https://images.unsplash.com/photo-1533147670608-2a2f9775d3a4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80" alt="dancing" />
-          <h4 class="text-white text-2xl font-bold capitalize text-center">Dancing</h4>
-          <p class="text-white/50">108 members</p>
-          <p class="absolute top-2 text-white/20 inline-flex items-center text-xs">86 Online <span class="ml-2 w-2 h-2 block bg-green-500 rounded-full group-hover:animate-pulse"></span></p>
-        </div>
-      </div>
+                  
+            <div class="mb-10 sm:mb-0 mt-4 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+              {trips.map((t) => {
+                <Card name={t.name} city={t.city} numberOfLikes={t.numberOfLikes} />
+              })
+              }
+              </div>
     </div>
   </div>
   </div>
@@ -133,5 +121,55 @@ return (
 )
 
 }
+
+const getUser = async (setTrips, session) => {
+  let user;
+  let trips;
+  console.log("hi");
+  console.log(session.user.name);
+  await fetch(`http://localhost:3000/api/users/getTripsByEmail`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: session.user.email
+    })
+  }).then(async (res) => {
+    const result = await res.json();
+    console.log(result + "from result");
+    trips = result.user.createdTrips;
+    console.log(trips);
+
+    trips.map((t) => {
+      getTrips(t, (r) => setTrips((prevState) => [...prevState, r]))
+    })
+
+  }).catch((err) => {
+    console.log(err);
+  })
+}
+
+const getTrips = async (tid, setTrips) => {
+  console.log("hi in getTrips");
+  await fetch(`http://localhost:3000/api/trips/getTrip`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id: tid
+    })
+  }).then(async (res) => {
+    const result = await res.json();
+    console.log(result + "from result");
+    trips = result.trip;
+    setTrips(result);
+
+  }).catch((err) => {
+    console.log(err);
+  })
+}
+
 
 export default Dashboard
