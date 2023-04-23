@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {signIn} from 'next-auth/react';
 import {useRouter} from 'next/router'
+import Navigation from '@/components/navigation';
 
 const Auth = () => {
 
@@ -16,7 +17,13 @@ const Auth = () => {
 
   return (
     <>
+      <Navigation />
+      <div
+        className="absolute -z-10 h-full w-full backdrop-filter backdrop-blur-xl bg-[url('/hero.jpeg')] bg-cover blur-sm"
+        aria-hidden="true"
+      ></div>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             className="mx-auto h-10 w-auto"
@@ -28,7 +35,7 @@ const Auth = () => {
           </h2>
         </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm text-lg font-bold leading-9 tracking-tight text-white">
           <form className="space-y-6" action="#" method="POST" onSubmit = {handleClick}>
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-white">
