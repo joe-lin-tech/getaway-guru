@@ -3,7 +3,7 @@ import Map from "@/components/Map"
 import { useState, useEffect, Fragment } from "react"
 import { CheckCircleIcon, CheckIcon, ChevronUpDownIcon } from "@heroicons/react/24/outline";
 import { Dialog, Listbox, Transition } from "@headlessui/react";
-import Form from "@/components/Form";
+import Form from "@/components/form";
 
 const categories = [
   {
@@ -36,21 +36,40 @@ const classNames = (...classes) => {
   return classes.filter(Boolean).join(' ')
 }
 
-const getData = async (position, setFoodPlaces) => {
+const getData = async (position, setFoodPlaces, setMuseumPlaces) => {
   const params = {
     latitude: position.lat,
     longitude: position.lng,
-    term: 'food'
   }
   await fetch(`/api/yelp/businesses`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(params)
+    body: JSON.stringify({
+      ...params,
+      term: 'food'
+    })
   }).then(async (res) => {
     const result = await res.json();
+    console.log(result)
     setFoodPlaces(result.businesses);
+  }).catch((err) => {
+    console.log(err);
+  })
+
+  await fetch(`/api/yelp/businesses`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      ...params,
+      term: 'museum'
+    })
+  }).then(async (res) => {
+    const result = await res.json();
+    setMuseumPlaces(result.businesses);
   }).catch((err) => {
     console.log(err);
   })
@@ -67,9 +86,11 @@ const PlacesCard = ({ index, place, dests, setDests }) => {
           {/* <img src={place.image_url} alt="" className="pointer-events-none object-cover group-hover:opacity-75" /> */}
           <img src={place.image_url} alt="" className="pointer-events-none object-cover" />
           <button type="button" className="absolute inset-0 focus:outline-none z-20" onClick={() => {
+            console.log("BEFORE: ", dests)
             if (dests.has(index)) dests.delete(index)
             else dests.add(index)
             setDests(new Set(dests))
+            console.log("AFTER: ", dests)
           }}>
             <span className="sr-only">View details for {place.name}</span>
           </button>
@@ -88,13 +109,42 @@ const PlacesCard = ({ index, place, dests, setDests }) => {
   )
 }
 
+const uploadTrip = async (places) => {
+  console.log(places)
+  console.log(JSON.stringify({
+    name: "Trip Name",
+    locations: places.map((p) => p.id),
+    media: places.map((p) => p.image_url)
+  }))
+  await fetch(`/api/trips/uploadTrip`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name: "Trip Name",
+      locations: places.map((p) => p.id),
+      media: places.map((p) => p.image_url)
+    })
+  }).then(async (res) => {
+    console.log(res)
+    // const result = await res.json();
+    // console.log(result)
+  }).catch((err) => {
+    console.log(err);
+  })
+}
+
 const Recommendations = () => {
   const [position, setPosition] = useState(undefined)
   const [places, setPlaces] = useState([])
   const [foodPlaces, setFoodPlaces] = useState([])
   const [foodDests, setFoodDests] = useState(new Set())
+  const [museumPlaces, setMuseumPlaces] = useState([])
+  const [museumDests, setMuseumDests] = useState(new Set())
   const [selected, setSelected] = useState(categories[0])
   const [formOpen, setFormOpen] = useState(true)
+  const [markers, setMarkers] = useState([])
 
   const render = (status) => {
     if (status == Status.FAILURE) return <div>Error</div>
@@ -106,8 +156,17 @@ const Recommendations = () => {
   }, [])
 
   useEffect(() => {
-    setPlaces([...Array.from(foodDests).map((i) => foodPlaces[i])])
-  }, [foodPlaces, foodDests])
+    console.log("BEFORE PLACES: ", foodDests, places)
+    setPlaces([...Array.from(foodDests).map((i) => foodPlaces[i]), ...Array.from(museumDests).map((i) => museumPlaces[i])])
+    console.log("BEFORE: MARKERS", markers, places, typeof([...Array.from(foodDests).map((i) => foodPlaces[i]), ...Array.from(museumDests).map((i) => museumPlaces[i])]))
+    for (let i = 0; i < markers.length; i++) markers[i].setMap(null)
+    setMarkers(places.map((p) =>
+      new google.maps.Marker({
+        position: { lat: p.coordinates.latitude, lng: p.coordinates.longitude },
+      })
+    ))
+    console.log("RECOMMENDATIONS EVFFECT: ", markers)
+  }, [foodPlaces, foodDests, museumPlaces, museumDests])
 
   if (!process.env.NEXT_PUBLIC_GOOGLE_MAPS || !position) return <div></div>
   return (
@@ -147,16 +206,23 @@ const Recommendations = () => {
       </Transition.Root>
       <div className="col-span-3 h-screen">
         <Wrapper apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS} render={render}>
-          <Map location={{ lat: position.lat, lng: position.lng }} zoomLevel={13} places={places}></Map>
+          <Map location={{ lat: position.lat, lng: position.lng }} zoomLevel={13} markers={markers}></Map>
         </Wrapper>
       </div>
       <div className="flex flex-col p-5">
         <button
           type="button"
           className="rounded-md bg-indigo-500 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-          onClick={() => getData(position, setFoodPlaces)}
+          onClick={() => getData(position, setFoodPlaces, setMuseumPlaces)}
         >
           Find recommendations!
+        </button>
+        <button
+          type="button"
+          className="rounded-md bg-indigo-500 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 mt-4"
+          onClick={() => uploadTrip(places)}
+        >
+          Upload Trip
         </button>
         <Listbox value={selected} onChange={setSelected}>
           {({ open }) => (
@@ -215,9 +281,15 @@ const Recommendations = () => {
             </>
           )}
         </Listbox>
-        {foodPlaces.length > 0 && <ul role="list" className="grid grid-cols-1 gap-x-4 gap-y-8 mt-6 overflow-y-auto h-screen">
+
+        {selected.name == "Food" && foodPlaces.length > 0 && <ul role="list" className="grid grid-cols-1 gap-x-4 gap-y-8 mt-6 overflow-y-auto h-screen">
           {foodPlaces.map((p, i) => (
             <PlacesCard key={i} index={i} place={p} dests={foodDests} setDests={setFoodDests} />
+          ))}
+        </ul>}
+        {selected.name == "Museum" && museumPlaces.length > 0 && <ul role="list" className="grid grid-cols-1 gap-x-4 gap-y-8 mt-6 overflow-y-auto h-screen">
+          {museumPlaces.map((p, i) => (
+            <PlacesCard key={i} index={i} place={p} dests={museumDests} setDests={setMuseumDests} />
           ))}
         </ul>}
       </div>
