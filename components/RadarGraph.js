@@ -1,41 +1,76 @@
-import React, { useRef, useEffect } from 'react'
-// Initialization for ES Users
-import {
-    Chart,
-    initTE,
-  } from "tw-elements";
-  
-  initTE({ Chart });
-  
-export default function RadarGraph() {
-    const canvasRef = useRef(null);
+import React from 'react';
 
-    useEffect(() => {
-        if(canvasRef.current && typeof window !== 'undefined'){
-            const canvas = canvasRef.current;
-            if (canvas.chart) {
-                // Destroy the previous chart instance
-                canvas.chart.destroy();
-              }
-              
-              // Create a new chart instance
-              var chart = new Chart(canvas, {
-                // chart configuration options
-              });
-              
-              // Store the chart instance on the canvas element
-              canvas.chart = chart;
-        }
-    }, [])
-  return (
-    <div class="mx-auto w-3/5 overflow-hidden">
-        <canvas
-            data-te-chart="radar"
-            data-te-dataset-label="Activity Breakdown"
-            data-te-labels="['Monuments', 'Nightlife' , 'Food' , 'Outdoors' , 'Museums' , 'Cultural' , 'Shopping']"
-            data-te-dataset-data="[2112, 2343, 2545, 3423, 2365, 1985, 987]"
-            ref={canvasRef}>
-        </canvas>
-    </div>
-  )
+import RadarChart from 'react-svg-radar-chart';
+import 'react-svg-radar-chart/build/css/index.css'
+
+class App extends React.Component {
+  render() {
+ 	 const data = [
+      {
+        data: {
+          Food: 0.7,
+          Museums: .8,
+          Nightlife: 0.9,
+          Nature: 0.67,
+          Theater: 0.8,
+          Events: 0.2,
+        },
+        meta: { color: 'blue' }
+      },
+      {
+        data: {
+          Food: 0.6,
+          Museums: .85,
+          Nightlife: 0.5,
+          Nature: 0.6,
+          Theater: 0.7,
+          Events: 0.2,
+        },
+        meta: { color: 'red' }
+      }
+    ];
+
+	const captions = {
+      // columns
+      Food: 'Food Capacity',
+      Museums: 'Museums',
+      Nightlife: 'Nightlifeness',
+      Nature: 'Nature',
+      Theater: 'Theater',
+      Events: 'Events',
+    };
+
+    return (
+      <div>
+        <RadarChart
+            captions={{
+              // columns
+              Food: 'Food Capacity',
+              Museums: 'Museums',
+              Nightlife: 'Nightlifeness',
+              Nature: 'Nature',
+              Theater: 'Theater',
+              Events: 'Events',
+            }}
+            data={[
+              // data
+              {
+                data: {
+                  Food: 0.7,
+                  Museums: .8,
+                  Nightlife: 0.9,
+                  Nature: 0.67,
+                  Theater: 0.8,
+                  Events: 0.2,
+                },
+                meta: { color: '#3ca35d' }
+              },
+            ]}
+            size={400}
+          />
+        </div>
+    );
+  }
 }
+
+export default App;

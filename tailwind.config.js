@@ -23,5 +23,6 @@ module.exports = {
     require('@tailwindcss/aspect-ratio'),
     require('@tailwindcss/forms'),
     require("tw-elements/dist/plugin"),
+    require('@tailwindcss/line-clamp'),
   ],
 }
