@@ -1,6 +1,6 @@
 import dbConnect from '../../../lib/dbConnect'
 const User = require("../../../models/user.js");
-const Trip = require("../../../models/trip.js");
+const {Trip} = require("../../../models/trip.js");
 
 
 
