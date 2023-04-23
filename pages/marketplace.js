@@ -26,11 +26,6 @@ const Marketplace = () => {
         <div className="pl-4 pr-4">
             <MarketplaceGrid trips={trips}/>
         </div>
-        
-        <div>
-            <Modal />
-        </div>
-  
     </div>
   )
 }
